@@ -1,7 +1,7 @@
 {
   "name": "sistemium-node",
   "description": "Sistemium node modules",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "lib/index.js",
   "author": "Albertik",
   "repository": "Albertik/sistemium-node",
