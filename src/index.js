@@ -1,7 +1,9 @@
-import jsDataAbstractController from './abstract.jsdata.controller';
-import stapiAbstractController from './abstract.stapi.controller';
+import jsDataBaseController from './abstract.jsdata.controller';
+import stapiBaseController from './abstract.stapi.controller';
+import baseStapiModel from './abstract.model';
 
 export {
-  jsDataAbstractController,
-  stapiAbstractController
+  jsDataBaseController,
+  stapiBaseController,
+  baseStapiModel
 };
