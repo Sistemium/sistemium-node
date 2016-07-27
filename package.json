@@ -1,10 +1,12 @@
 {
+
   "name": "sistemium-node",
   "description": "Sistemium node modules",
   "version": "0.1.2",
   "main": "lib/index.js",
   "author": "Albertik",
   "repository": "Albertik/sistemium-node",
+
   "license": "MIT",
   "scripts": {
     "compile": "babel src --out-dir lib",
@@ -12,10 +14,11 @@
     "prepublish": "npm run compile",
     "test": "babel-node ./node_modules/.bin/isparta cover _mocha"
   },
+
   "devDependencies": {
     "babel-cli": "*",
-    "babel-preset-es2015-node4": "*",
-    "chai": "*",
+    "babel-preset-es2015": "^6.9.0",
+    "gulp-babel": "^6.1.2",    "chai": "*",
     "coveralls": "*",
     "debug": "^2.2.0",
     "isparta": "*",
@@ -24,7 +27,15 @@
     "sinon": "^1.17.4",
     "sinon-stub-promise": "^3.0.1"
   },
+
   "dependencies": {
     "lodash": "^4.14.0"
-  }
+  },
+
+  "engines": {
+    "node": "^5.4.1",
+    "npm": "^3.3.12"
+  },
+
+  "private": true
 }
