@@ -1,10 +1,10 @@
 {
   "name": "sistemium-node",
-  "description": "Sistemium node modules",
+  "description": "Sistemium node modules for js-data schema, base controllers and models",
   "version": "0.1.2",
   "main": "lib/index.js",
-  "author": "Albertik",
-  "repository": "Albertik/sistemium-node",
+  "author": "Albert Kovalevskij",
+  "repository": "sistemium/sistemium-node",
   "license": "MIT",
   "scripts": {
     "compile": "babel src --out-dir lib",
@@ -37,6 +37,5 @@
   "engines": {
     "node": "^5.4.1",
     "npm": "^3.3.12"
-  },
-  "private": true
+  }
 }
