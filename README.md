@@ -9,7 +9,7 @@
 ![dev dependencies](https://img.shields.io/david/dev/Albertik/sistemium-node.svg)
 ![License](https://img.shields.io/npm/l/sistemium-node.svg)
 
-Sistemium node modules
+Sistemium node modules for js-data schema, base controllers and models
 
 ## Getting Started
 
