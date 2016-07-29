@@ -20,6 +20,14 @@ function findOrCreate(id, body) {
       this.find(id)
         .then(res => {
           debug('found by id:', name, res);
+
+          if (Array.isArray(res)) {
+            debug('Not found by id, returned:', res);
+            reject({
+              data: 'Not found by id'
+            });
+          }
+
           fulfil(res);
         })
         .catch((err) => {
