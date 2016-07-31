@@ -1,13 +1,18 @@
 'use strict';
 
+var debug = require('debug')('stm:node:stapi:controller');
 import _ from 'lodash';
 
 /**
  *
- * @param {Object} model
+ * @param {Object} defaultModel
  * @returns {Object} - Controller object
  */
-function controller(model) {
+function controller(defaultModel) {
+
+  function model (req) {
+    return (req.model || defaultModel)(req);
+  }
 
   function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
@@ -60,39 +65,37 @@ function controller(model) {
 
   // Gets a list of ProviderAccounts
   function index(req, res) {
-    (req.model || model)(req).find()
+    model(req).find()
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
 
   function show(req, res) {
 
-    (req.model || model)(req).findById(req.params.id)
+    model(req).findById(req.params.id)
       .then(respondWithResult(res))
       .catch(handleError(res))
     ;
   }
 
   function create(req, res) {
-    (req.model || model)(req).create(req.body)
+    model(req).create(req.body)
       .then(respondWithResult(res, 201))
       .catch(handleError(res));
   }
 
   function destroy(req, res) {
-    (req.model || model)(req).findById(req.params.id)
+    model(req).findById(req.params.id)
       .then(handleEntityNotFound(res))
       .then(removeEntity(res))
       .catch(handleError(res));
   }
 
   function update(req, res) {
-    if (req.body.id) {
+    if (req.params.id && req.body.id) {
       delete req.body.id;
     }
-    (req.model || model)(req).findById(req.params.id)
-      .then(handleEntityNotFound(res))
-      .then(saveUpdates(req.body))
+    model(req).update(req.params.id, req.body)
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
