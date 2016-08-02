@@ -72,15 +72,20 @@ function model(name) {
           headers: {
             authorization: req && req.headers.authorization
           },
-          json: body
+          json: body,
+          qs: req.query
         }, function (err, res, json) {
           debug(res.statusCode, json);
-          let e = err || res.statusCode !== 200 && json;
+          let e = err || [201,200].indexOf(res.statusCode) === -1 && json;
           if (e) {
             e = res.statusCode !== 201 && json;
           }
           debug('save', e);
-          e && reject(e) || resolve(body);
+          if (e) {
+            reject(e);
+          } else {
+            resolve(json);
+          }
         });
 
       });
