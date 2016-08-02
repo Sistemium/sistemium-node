@@ -17,7 +17,8 @@ function model(name) {
 
         if (typeof options === 'string') {
           url += '/' + options;
-          options = undefined;
+          // TODO: maybe here should be something smarter
+          options = req.query;
         }
 
         //debug ('find', options);
@@ -52,10 +53,9 @@ function model(name) {
     }
 
     function findOne(options) {
-      //debug ('findOne',options);
       return new Promise((resolve, reject) => {
 
-        debug('options:', options);
+        debug('findOne options:', options);
         find(options).then(reply => {
           debug('reply:', reply);
           reply && reply.length && resolve(reply[0]) || resolve(false);

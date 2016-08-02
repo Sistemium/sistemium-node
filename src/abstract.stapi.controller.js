@@ -69,7 +69,7 @@ function controller(defaultModel) {
     if (req.params.id) {
       options.id = req.params.id;
     }
-    return model(req).find({params: options})
+    return model(req).find(options)
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
