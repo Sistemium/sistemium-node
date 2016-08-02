@@ -63,29 +63,31 @@ function controller(defaultModel) {
     };
   }
 
-  // Gets a list of ProviderAccounts
   function index(req, res) {
-    model(req).find()
+    var options = req.query;
+    if (req.params.id) {
+      options.id = req.params.id;
+    }
+    return model(req).find({params: options})
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
 
   function show(req, res) {
-
-    model(req).findById(req.params.id)
+    return model(req).findById(req.params.id)
       .then(respondWithResult(res))
       .catch(handleError(res))
     ;
   }
 
   function create(req, res) {
-    model(req).create(req.body)
+    return model(req).save(req.body)
       .then(respondWithResult(res, 201))
       .catch(handleError(res));
   }
 
   function destroy(req, res) {
-    model(req).findById(req.params.id)
+    return model(req).findById(req.params.id)
       .then(handleEntityNotFound(res))
       .then(removeEntity(res))
       .catch(handleError(res));
@@ -95,7 +97,7 @@ function controller(defaultModel) {
     if (req.params.id && req.body.id) {
       delete req.body.id;
     }
-    model(req).update(req.params.id, req.body)
+    return model(req).update(req.params.id, req.body)
       .then(respondWithResult(res))
       .catch(handleError(res));
   }
