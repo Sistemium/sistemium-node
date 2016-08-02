@@ -10,7 +10,7 @@ import _ from 'lodash';
  */
 function controller(defaultModel) {
 
-  function model (req) {
+  function model(req) {
     return (req.model || defaultModel)(req);
   }
 
@@ -19,6 +19,7 @@ function controller(defaultModel) {
     return function (entity) {
       if (entity) {
         res.status(statusCode).json(entity);
+        return entity;
       } else {
         res.status(404).end();
       }
@@ -77,11 +78,18 @@ function controller(defaultModel) {
     return model(req).findById(req.params.id)
       .then(respondWithResult(res))
       .catch(handleError(res))
-    ;
+      ;
   }
 
-  function create(req, res) {
-    return model(req).save(req.body)
+  function create(req, res, onSuccess) {
+    var q = model(req).save(req.body);
+
+    (onSuccess ? new Promise((resolve, reject) => {
+      q.then(res => {
+        onSuccess(res)
+          .then(resolve, reject);
+      }, reject);
+    }) : q)
       .then(respondWithResult(res, 201))
       .catch(handleError(res));
   }
