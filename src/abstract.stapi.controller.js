@@ -81,8 +81,9 @@ function controller(defaultModel) {
       ;
   }
 
-  function create(req, res, onSuccess) {
+  function create(req, res, next) {
     var q = model(req).save(req.body);
+    var onSuccess = req.onStapiSuccess;
 
     (onSuccess ? new Promise((resolve, reject) => {
       q.then(res => {
