@@ -75,17 +75,25 @@ function model(name) {
           json: body,
           qs: req.query
         }, function (err, res, json) {
-          debug(res.statusCode, json);
-          let e = err || [201,200].indexOf(res.statusCode) === -1 && json;
-          if (e) {
-            e = res.statusCode !== 201 && json;
+
+          debug('save response:', res.statusCode, json);
+
+          let e = err;
+
+          if (!err && [201,200].indexOf(res.statusCode) === -1) {
+            e = {
+              status: res.statusCode,
+              data: json
+            };
           }
-          debug('save', e);
+
           if (e) {
+            debug('save error:', e);
             reject(e);
           } else {
             resolve(json);
           }
+
         });
 
       });
