@@ -26,6 +26,13 @@ function controller(defaultModel) {
     };
   }
 
+  function respondWithNoResult(res, statusCode) {
+    statusCode = statusCode || 204;
+    return function () {
+        res.sendStatus(statusCode);
+    };
+  }
+
   function handleError(res, statusCode) {
     statusCode = statusCode || 500;
     return function (err) {
@@ -96,9 +103,8 @@ function controller(defaultModel) {
   }
 
   function destroy(req, res) {
-    return model(req).findById(req.params.id)
-      .then(handleEntityNotFound(res))
-      .then(removeEntity(res))
+    return model(req).deleteById(req.params.id)
+      .then(respondWithNoResult(res))
       .catch(handleError(res));
   }
 
