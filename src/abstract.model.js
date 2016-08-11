@@ -118,19 +118,24 @@ function model(name) {
     }
 
     function getOrCreate(params, data) {
-
       return new Promise((resolve, reject) => {
-        findOne(params).then(body => {
 
-          if (body) {
-            resolve(body);
-          } else {
-            save(_.defaults(data, params, {id: uuid.v4()})).then(resolve, reject);
-          }
+        if (params) {
+          findOne(params).then(body => {
 
-        }, reject);
+            if (body) {
+              resolve(body);
+            } else {
+              save(_.defaults(data, params, {id: uuid.v4()})).then(resolve, reject);
+            }
+
+          }, reject);
+        } else {
+          save(_.defaults(data, params, {id: uuid.v4()}))
+            .then(resolve, reject);
+        }
+
       });
-
     }
 
     function findById(id) {
