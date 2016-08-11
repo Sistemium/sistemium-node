@@ -58,7 +58,25 @@ function model(name) {
         debug('findOne options:', options);
         find(options).then(reply => {
           debug('reply:', reply);
-          reply && reply.length && resolve(reply[0]) || resolve(false);
+
+          if (reply) {
+            if (_.isArray(reply)) {
+
+              if (reply.length > 1) {
+                console.error('abstract.model.findOne reply length=', reply.length);
+                return reject('reply length > 1');
+              }
+
+              resolve(reply[0]);
+
+            } else {
+              console.error('abstract.model.findOne incorrect reply');
+              reject(reply);
+            }
+
+          } else {
+            resolve(false);
+          }
         }, reject);
 
       });
