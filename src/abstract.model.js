@@ -28,7 +28,7 @@ function model(name) {
           qs: options && options.params || options,
           json: true,
           headers: {
-            authorization: req && req.headers.authorization
+            authorization: _.get(req, 'headers.authorization')
           }
         }, function (err, res, body) {
 
@@ -88,7 +88,7 @@ function model(name) {
         request.post({
           url: collectionUrl,
           headers: {
-            authorization: req && req.headers.authorization
+            authorization: _.get(req, 'headers.authorization')
           },
           json: body,
           qs: req.query
@@ -145,7 +145,7 @@ function model(name) {
         request.del({
           url: url,
           headers: {
-            authorization: req && req.headers.authorization
+            authorization: _.get(req, 'headers.authorization')
           }
         }, function (err, res, body) {
           if (err) {
@@ -167,7 +167,7 @@ function model(name) {
           url: url,
           json: body,
           headers: {
-            authorization: req && req.headers.authorization
+            authorization: _.get(req, 'headers.authorization')
           }
         }, function (err, res, body) {
           if (err) {
@@ -191,7 +191,7 @@ function model(name) {
           url: url,
           json: body,
           headers: {
-            authorization: req && req.headers.authorization
+            authorization: _.get(req, 'headers.authorization')
           }
         }, (err, res, body) => {
           if (err) {
