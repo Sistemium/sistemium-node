@@ -24,7 +24,8 @@
     "node-mocks-http": "^1.5.2",
     "sinon": "^1.17.4",
     "sinon-stub-promise": "^3.0.1",
-    "watch": "^0.19.1"
+    "watch": "^0.19.1",
+    "sistemium-redis": "latest"
   },
   "dependencies": {
     "debug": "^2.2.0",
