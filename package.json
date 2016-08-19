@@ -28,12 +28,13 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "js-data": "js-data/js-data#3.0.0-rc.4",
-    "js-data-http-node": "js-data/js-data-http#3.0.0-rc.1",
+    "js-data": "^3.0.0-rc.4",
+    "js-data-http-node": "^3.0.0-rc.1",
     "lodash": "^4.14.0",
     "node-uuid": "^1.4.7",
     "request": "^2.74.0",
-    "save": "^2.3.0"
+    "save": "^2.3.0",
+    "sistemium-redis": "^0.1.0"
   },
   "engines": {
     "node": "^5.4.1",

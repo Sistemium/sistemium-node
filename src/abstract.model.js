@@ -1,8 +1,11 @@
 'use strict';
 import request from 'request';
-var _ = require('lodash');
+import sistemiumRedis from 'sistemium-redis';
+import _ from 'lodash';
+import uuid from 'node-uuid';
+
 var debug = require('debug')('authAPI:abstract.model');
-var uuid = require('node-uuid');
+var redisClient = sistemiumRedis();
 
 function model(name) {
 
@@ -53,34 +56,62 @@ function model(name) {
     }
 
     function findOne(options) {
-      return new Promise((resolve, reject) => {
 
+      function stapiModelFindRequest() {
         debug('findOne options:', options);
-        find(options).then(reply => {
-          debug('reply:', reply);
+        return new Promise((resolve, reject) => {
+          find(options).then(reply => {
+            debug('reply:', reply);
 
-          if (reply) {
-            if (_.isArray(reply)) {
+            if (reply) {
+              if (_.isArray(reply)) {
 
-              if (reply.length > 1) {
-                console.error('abstract.model.findOne reply length=', reply.length);
-                return reject('reply length > 1');
+                if (reply.length > 1) {
+                  console.error('abstract.model.findOne reply length=', reply.length);
+                  return reject('reply length > 1');
+                }
+
+                resolve(reply[0]);
+
+              } else {
+                console.error('abstract.model.findOne incorrect reply');
+                reject(reply);
               }
 
-              resolve(reply[0]);
+            } else {
+              resolve(false);
+            }
+          }, reject);
+        })
+      }
+
+      const HASH_NAME = `${name}:${options}`;
+      return new Promise((resolve, reject) => {
+        redisClient.hgetallAsync(HASH_NAME)
+          .then((res) => {
+
+            if (!res) {
+
+              stapiModelFindRequest()
+                .then(reply => {
+                  console.log('reply:', reply);
+                  let objectForSaving = JSON.stringify(reply);
+                  redisClient.hset(HASH_NAME, options, objectForSaving);
+                  return resolve(reply);
+                })
+                .catch(reject);
 
             } else {
-              console.error('abstract.model.findOne incorrect reply');
-              reject(reply);
+              console.log('response:', res[options]);
+              return resolve(JSON.parse(res[options]));
             }
 
-          } else {
-            resolve(false);
-          }
-        }, reject);
+          })
+          .catch(reject);
 
       });
     }
+
 
     function save(body) {
       return new Promise(function (resolve, reject) {
@@ -98,7 +129,7 @@ function model(name) {
 
           let e = err;
 
-          if (!err && [201,200].indexOf(res.statusCode) === -1) {
+          if (!err && [201, 200].indexOf(res.statusCode) === -1) {
             e = {
               status: res.statusCode,
               data: json
@@ -176,7 +207,7 @@ function model(name) {
           }
         }, function (err, res, body) {
           if (err) {
-            return reject (err);
+            return reject(err);
           }
 
           resolve(body);
@@ -185,9 +216,9 @@ function model(name) {
       });
     }
 
-    function patch (id, body) {
+    function patch(id, body) {
 
-      return new Promise (function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         let url = collectionUrl + '/' + id;
 
         //debug ('patch authorization:',req.headers);
@@ -200,7 +231,7 @@ function model(name) {
           }
         }, (err, res, body) => {
           if (err) {
-            return reject (err);
+            return reject(err);
           }
 
           resolve(body);
@@ -219,7 +250,8 @@ function model(name) {
       getOrCreate: getOrCreate,
       deleteById: deleteById
     };
-  };
+  }
+    ;
 
 
 }
