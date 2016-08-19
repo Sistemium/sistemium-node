@@ -17,6 +17,7 @@ function controller(model) {
     return function (entity) {
       if (entity) {
         res.status(statusCode).json(entity);
+        return entity;
       } else {
         res.status(404).end();
       }
