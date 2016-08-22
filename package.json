@@ -3,7 +3,16 @@
   "description": "Sistemium node modules for js-data schema, base controllers and models",
   "version": "0.1.11",
   "main": "lib/index.js",
-  "author": "Albert Kovalevskij",
+  "author": "Sistemium UAB <uab@sistemium.com>",
+  "contributors": [
+    {
+      "name": "Alexander Levin",
+      "email": "a@sistemium.com"
+    },
+    {
+      "name": "Albert Kovalevskij"
+    }
+  ],
   "repository": "sistemium/sistemium-node",
   "license": "MIT",
   "scripts": {
