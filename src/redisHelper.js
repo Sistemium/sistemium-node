@@ -13,6 +13,4 @@ function hset (name, id, data) {
   return sistemiumRedis.hsetJson(name, id, data);
 }
 
-var redisHelper = {setup, hget, hset};
-
-export default redisHelper;
+export default {setup, hget, hset};
