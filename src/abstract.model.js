@@ -25,7 +25,7 @@ function model(name) {
 
         request({
           url: url,
-          qs: options && options.params || options,
+          qs: options && options.params || options || req.query,
           json: true,
           headers: {
             authorization: _.get(req, 'headers.authorization')
