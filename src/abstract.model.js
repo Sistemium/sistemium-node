@@ -1,7 +1,7 @@
 'use strict';
 import request from 'request';
 var _ = require('lodash');
-var debug = require('debug')('authAPI:abstract.model');
+var debug = require('debug')('stm:abstract.model');
 var uuid = require('node-uuid');
 
 function model(name) {
@@ -9,6 +9,17 @@ function model(name) {
   var collectionUrl = process.env.STAPI + name;
 
   return function (req) {
+
+    return {
+      find,
+      findOne,
+      findById,
+      save,
+      update,
+      patch,
+      getOrCreate,
+      deleteById
+    };
 
     function find(options) {
       return new Promise(function (resolve, reject) {
@@ -18,14 +29,14 @@ function model(name) {
         if (typeof options === 'string') {
           url += '/' + options;
           // TODO: maybe here should be something smarter
-          options = req.query;
+          options = _.get(req, 'query');
         }
 
         //debug ('find', options);
 
         request({
           url: url,
-          qs: options && options.params || options || req.query,
+          qs: options && options.params || options || _.get(req, 'query'),
           json: true,
           headers: {
             authorization: _.get(req, 'headers.authorization')
@@ -91,7 +102,7 @@ function model(name) {
             authorization: _.get(req, 'headers.authorization')
           },
           json: body,
-          qs: req.query
+          qs: _.get(req, 'query')
         }, function (err, res, json) {
 
           debug('save response:', res.statusCode, json);
@@ -190,8 +201,6 @@ function model(name) {
       return new Promise (function (resolve, reject) {
         let url = collectionUrl + '/' + id;
 
-        //debug ('patch authorization:',req.headers);
-
         request.patch({
           url: url,
           json: body,
@@ -209,16 +218,6 @@ function model(name) {
 
     }
 
-    return {
-      find: find,
-      findOne: findOne,
-      findById: findById,
-      save: save,
-      update: update,
-      patch: patch,
-      getOrCreate: getOrCreate,
-      deleteById: deleteById
-    };
   };
 
 
