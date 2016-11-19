@@ -1,12 +1,16 @@
 'use strict';
+
 import request from 'request';
-var _ = require('lodash');
-var debug = require('debug')('stm:abstract.model');
-var uuid = require('node-uuid');
+import _ from 'lodash';
+import uuid from 'node-uuid';
+
+const debug = require('debug')('stm:abstract.model');
+
+export default model;
 
 function model(name) {
 
-  var collectionUrl = process.env.STAPI + name;
+  let collectionUrl = process.env.STAPI + name;
 
   return function (req) {
 
@@ -222,5 +226,3 @@ function model(name) {
 
 
 }
-
-export default model;
