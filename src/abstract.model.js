@@ -2,7 +2,7 @@
 import request from 'request';
 var _ = require('lodash');
 var debug = require('debug')('stm:abstract.model');
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 
 function model(name) {
 
