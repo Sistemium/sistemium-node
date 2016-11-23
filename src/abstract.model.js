@@ -1,18 +1,12 @@
 'use strict';
 
 import request from 'request';
-<<<<<<< HEAD
 import _ from 'lodash';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 const debug = require('debug')('stm:abstract.model');
 
 export default model;
-=======
-var _ = require('lodash');
-var debug = require('debug')('stm:abstract.model');
-var uuid = require('uuid');
->>>>>>> origin/master
 
 function model(name) {
 
