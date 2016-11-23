@@ -46,10 +46,10 @@
     "lodash": "^4.17.2",
     "mocha": "^3.1.2",
     "node-mocks-http": "^1.5.4",
-    "node-uuid": "^1.4.7",
     "request": "^2.79.0",
     "save": "^2.3.0",
-    "sistemium-redis": "latest"
+    "sistemium-redis": "latest",
+    "uuid": "^3.0.0"
   },
   "engines": {
     "node": "^5.4.1",
