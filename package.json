@@ -1,7 +1,7 @@
 {
   "name": "sistemium-node",
   "description": "Sistemium node modules for js-data schema, base controllers and models",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "main": "lib/index.js",
   "author": "Sistemium UAB <uab@sistemium.com>",
   "contributors": [
